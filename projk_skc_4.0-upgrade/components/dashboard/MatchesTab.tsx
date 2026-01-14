@@ -66,7 +66,7 @@ export default function MatchesTab({
     setBlockingUser(userId)
     try {
       const token = localStorage.getItem("token")
-      const response = await fetch("/api/user/block", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user/block`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

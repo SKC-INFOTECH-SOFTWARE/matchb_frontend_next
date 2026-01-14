@@ -108,7 +108,7 @@ export default function AdminSearchVisibilityManager() {
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("/api/admin/search-visibility", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/search-visibility`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -140,7 +140,7 @@ export default function AdminSearchVisibilityManager() {
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("/api/admin/search-visibility", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/search-visibility`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -174,7 +174,7 @@ export default function AdminSearchVisibilityManager() {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `/api/admin/search-visibility?id=${id}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/search-visibility?id=${id}`,
         {
           method: "DELETE",
           headers: {

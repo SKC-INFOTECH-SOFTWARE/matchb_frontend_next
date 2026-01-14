@@ -3,7 +3,7 @@ import { UserProfile, Payment, PotentialMatch, CurrentMatch } from "./types"
 export const fetchProfiles = async (): Promise<UserProfile[]> => {
   try {
     const token = localStorage.getItem("token")
-    const response = await fetch("/api/admin/profiles", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/profiles`, {
       headers: { Authorization: `Bearer ${token}` },
     })
 
@@ -23,7 +23,7 @@ export const fetchProfiles = async (): Promise<UserProfile[]> => {
 export const fetchStats = async () => {
   try {
     const token = localStorage.getItem("token")
-    const response = await fetch("/api/admin/stats", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/stats`, {
       headers: { Authorization: `Bearer ${token}` },
     })
 
@@ -40,7 +40,7 @@ export const fetchStats = async () => {
 export const fetchPayments = async (): Promise<Payment[]> => {
   try {
     const token = localStorage.getItem("token")
-    const response = await fetch("/api/admin/payments", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/payments`, {
       headers: { Authorization: `Bearer ${token}` },
     })
 
@@ -58,7 +58,7 @@ export const fetchPayments = async (): Promise<Payment[]> => {
 export const fetchMatches = async (userId: number) => {
   try {
     const token = localStorage.getItem("token")
-    const response = await fetch(`/api/admin/matches?userId=${userId}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/matches?userId=${userId}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
 
@@ -79,7 +79,7 @@ export const handleProfileApproval = async (
 ) => {
   try {
     const token = localStorage.getItem("token")
-    const response = await fetch("/api/admin/approve-profile", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/approve-profile`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -102,7 +102,7 @@ export const handlePaymentVerification = async (
 ) => {
   try {
     const token = localStorage.getItem("token")
-    const response = await fetch("/api/admin/payments", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/payments`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -121,7 +121,7 @@ export const handlePaymentVerification = async (
 export const updateUserStatus = async (userId: number, status: string) => {
   try {
     const token = localStorage.getItem("token")
-    const response = await fetch("/api/admin/update-status", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/update-status`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -140,7 +140,7 @@ export const updateUserStatus = async (userId: number, status: string) => {
 export const createMatches = async (userId: number, matchedUserIds: number[]) => {
   try {
     const token = localStorage.getItem("token")
-    const response = await fetch("/api/admin/matches", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/matches`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -159,7 +159,7 @@ export const createMatches = async (userId: number, matchedUserIds: number[]) =>
 export const removeMatch = async (userId: number, matchedUserId: number) => {
   try {
     const token = localStorage.getItem("token")
-    const response = await fetch("/api/admin/matches", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/matches`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

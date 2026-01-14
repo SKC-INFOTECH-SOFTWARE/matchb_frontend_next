@@ -11,9 +11,9 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Switch } from "@/components/ui/switch"
 import { Badge } from "@/components/ui/badge"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { 
-  CreditCard, Plus, Edit2, Trash2, Loader2, DollarSign, 
-  Calendar, CheckCircle, XCircle, Save, X, Phone, Users 
+import {
+  CreditCard, Plus, Edit2, Trash2, Loader2, DollarSign,
+  Calendar, CheckCircle, XCircle, Save, X, Phone, Users
 } from "lucide-react"
 
 interface Plan {
@@ -49,7 +49,7 @@ export default function AdminPlansManagement() {
   const [plans, setPlans] = useState<Plan[]>([])
   const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null)
-  
+
   const [dialog, setDialog] = useState<{
     open: boolean
     type: 'create' | 'edit' | 'delete' | null
@@ -78,7 +78,7 @@ export default function AdminPlansManagement() {
   const fetchPlans = async () => {
     try {
       const token = localStorage.getItem("token")
-      const response = await fetch("/api/admin/plans", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/plans`, {
         headers: { Authorization: `Bearer ${token}` },
       })
 
@@ -189,10 +189,10 @@ export default function AdminPlansManagement() {
 
     try {
       const token = localStorage.getItem("token")
-      const url = dialog.type === 'edit' 
-        ? `/api/admin/plans/${dialog.plan?.id}` 
-        : '/api/admin/plans'
-      
+      const url = dialog.type === 'edit'
+        ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/plans/${dialog.plan?.id}`
+        : `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/plans`
+
       const method = dialog.type === 'edit' ? 'PUT' : 'POST'
 
       const requestData: {
@@ -235,9 +235,9 @@ export default function AdminPlansManagement() {
       if (response.ok) {
         await fetchPlans()
         closeDialog()
-        setMessage({ 
-          type: 'success', 
-          text: `Plan ${dialog.type === 'edit' ? 'updated' : 'created'} successfully` 
+        setMessage({
+          type: 'success',
+          text: `Plan ${dialog.type === 'edit' ? 'updated' : 'created'} successfully`
         })
       } else {
         const data = await response.json()
@@ -257,7 +257,7 @@ export default function AdminPlansManagement() {
 
     try {
       const token = localStorage.getItem("token")
-      const response = await fetch(`/api/admin/plans/${dialog.plan.id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/plans/${dialog.plan.id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
       })
@@ -280,7 +280,7 @@ export default function AdminPlansManagement() {
   const togglePlanStatus = async (planId: number, currentStatus: boolean) => {
     try {
       const token = localStorage.getItem("token")
-      const response = await fetch(`/api/admin/plans/${planId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/plans/${planId}`, {
         method: 'PUT',
         headers: {
           "Content-Type": "application/json",
@@ -291,9 +291,9 @@ export default function AdminPlansManagement() {
 
       if (response.ok) {
         await fetchPlans()
-        setMessage({ 
-          type: 'success', 
-          text: `Plan ${!currentStatus ? 'activated' : 'deactivated'} successfully` 
+        setMessage({
+          type: 'success',
+          text: `Plan ${!currentStatus ? 'activated' : 'deactivated'} successfully`
         })
       } else {
         setMessage({ type: 'error', text: 'Failed to update plan status' })
@@ -577,7 +577,7 @@ export default function AdminPlansManagement() {
               {dialog.type === 'create' ? 'Create New Plan' : 'Edit Plan'}
             </DialogTitle>
             <DialogDescription className="text-sm">
-              {dialog.type === 'create' 
+              {dialog.type === 'create'
                 ? 'Create a new subscription plan for users'
                 : 'Update the selected plan details'
               }
@@ -594,8 +594,8 @@ export default function AdminPlansManagement() {
             {/* Plan Type Selection */}
             <div className="space-y-3">
               <Label className="text-sm font-medium">Plan Type *</Label>
-              <RadioGroup 
-                value={formData.type} 
+              <RadioGroup
+                value={formData.type}
                 onValueChange={handlePlanTypeChange}
                 disabled={isSubmitting}
                 className="grid grid-cols-2 gap-4"
@@ -752,18 +752,18 @@ export default function AdminPlansManagement() {
             </div>
 
             <div className="flex flex-col sm:flex-row justify-end gap-2 pt-4">
-              <Button 
-                type="button" 
-                variant="outline" 
-                onClick={closeDialog} 
+              <Button
+                type="button"
+                variant="outline"
+                onClick={closeDialog}
                 disabled={isSubmitting}
                 className="w-full sm:w-auto order-2 sm:order-1"
               >
                 <X className="h-4 w-4 mr-2" />
                 Cancel
               </Button>
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 disabled={isSubmitting}
                 className="w-full sm:w-auto order-1 sm:order-2"
               >
@@ -807,16 +807,16 @@ export default function AdminPlansManagement() {
           )}
 
           <div className="flex flex-col sm:flex-row justify-end gap-2">
-            <Button 
-              variant="outline" 
-              onClick={closeDialog} 
+            <Button
+              variant="outline"
+              onClick={closeDialog}
               disabled={isSubmitting}
               className="w-full sm:w-auto order-2 sm:order-1"
             >
               Cancel
             </Button>
-            <Button 
-              variant="destructive" 
+            <Button
+              variant="destructive"
               onClick={handleDelete}
               disabled={isSubmitting}
               className="w-full sm:w-auto order-1 sm:order-2"

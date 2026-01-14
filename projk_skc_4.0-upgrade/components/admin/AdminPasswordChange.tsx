@@ -63,7 +63,7 @@ export default function AdminPasswordChange({ userId }: AdminPasswordChangeProps
 
     try {
       const token = localStorage.getItem("token")
-      const response = await fetch("/api/admin/change-password", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/change-password`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

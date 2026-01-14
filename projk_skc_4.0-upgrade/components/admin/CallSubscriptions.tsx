@@ -82,7 +82,7 @@ export default function CallSubscriptions() {
   const [loadingSubscriptions, setLoadingSubscriptions] = useState(true)
   const [loadingExotelCredit, setLoadingExotelCredit] = useState(true)
   const [loadingDistributions, setLoadingDistributions] = useState(true)
-  
+
   const [verifyDialog, setVerifyDialog] = useState<{
     open: boolean
     subscription: CallSubscription | null
@@ -147,7 +147,7 @@ export default function CallSubscriptions() {
     try {
       setLoadingSubscriptions(true)
       const token = localStorage.getItem("token")
-      const response = await fetch("/api/admin/call-subscriptions", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/call-subscriptions`, {
         headers: { Authorization: `Bearer ${token}` },
       })
 
@@ -168,7 +168,7 @@ export default function CallSubscriptions() {
     try {
       setLoadingExotelCredit(true)
       const token = localStorage.getItem("token")
-      const response = await fetch("/api/admin/exotel-credits", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/exotel-credits`, {
         headers: { Authorization: `Bearer ${token}` },
       })
 
@@ -189,7 +189,7 @@ export default function CallSubscriptions() {
     try {
       setLoadingDistributions(true)
       const token = localStorage.getItem("token")
-      const response = await fetch("/api/admin/credit-distributions", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/credit-distributions`, {
         headers: { Authorization: `Bearer ${token}` },
       })
 
@@ -211,7 +211,7 @@ export default function CallSubscriptions() {
 
     try {
       const token = localStorage.getItem("token")
-      const response = await fetch("/api/admin/verify-call-payment", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/verify-call-payment`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -239,7 +239,7 @@ export default function CallSubscriptions() {
   const handleCreditAdjustment = async () => {
     try {
       const token = localStorage.getItem("token")
-      const response = await fetch("/api/admin/adjust-credits", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/adjust-credits`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -276,7 +276,7 @@ export default function CallSubscriptions() {
   const handleExotelSettingsUpdate = async () => {
     try {
       const token = localStorage.getItem("token")
-      const response = await fetch("/api/admin/exotel-settings", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/exotel-settings`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -401,8 +401,8 @@ export default function CallSubscriptions() {
                   <TrendingUp className="h-4 w-4 text-gray-400" />
                 </div>
                 <div className="text-2xl font-bold text-gray-900">{formatNumber(exotelCredit.used_credits)}</div>
-                <Progress 
-                  value={Math.round((exotelCredit.used_credits / exotelCredit.total_credits) * 100)} 
+                <Progress
+                  value={Math.round((exotelCredit.used_credits / exotelCredit.total_credits) * 100)}
                   className="mt-2 h-1"
                 />
               </CardContent>
@@ -424,8 +424,8 @@ export default function CallSubscriptions() {
                   <Clock className="h-4 w-4 text-gray-400" />
                 </div>
                 <div className="text-2xl font-bold text-gray-900">{formatNumber(exotelCredit.current_month_usage)}</div>
-                <Progress 
-                  value={Math.round((exotelCredit.current_month_usage / exotelCredit.monthly_limit) * 100)} 
+                <Progress
+                  value={Math.round((exotelCredit.current_month_usage / exotelCredit.monthly_limit) * 100)}
                   className="mt-2 h-1"
                 />
               </CardContent>
@@ -498,7 +498,7 @@ export default function CallSubscriptions() {
               <CardHeader className="border-b border-gray-100">
                 <CardTitle className="text-lg text-gray-900">Payment Verification</CardTitle>
                 <CardDescription className="text-gray-600">Review and verify call subscription payments</CardDescription>
-                
+
                 {/* Filters */}
                 <div className="flex flex-col sm:flex-row gap-3 mt-4">
                   <Input
@@ -600,7 +600,7 @@ export default function CallSubscriptions() {
                               )}
                             </div>
                           </div>
-                          
+
                           {/* Mobile Actions */}
                           <div className="flex flex-wrap gap-2">
                             {subscription.payment_screenshot && (
@@ -717,7 +717,7 @@ export default function CallSubscriptions() {
                               )}
                             </div>
                           </div>
-                          
+
                           {/* Desktop Actions */}
                           <div className="flex items-center gap-2">
                             {subscription.payment_screenshot && (
@@ -1004,7 +1004,7 @@ export default function CallSubscriptions() {
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
               <DialogTitle>
-                {creditDialog.action === 'add' ? 'Add Credits' : 
+                {creditDialog.action === 'add' ? 'Add Credits' :
                  creditDialog.action === 'remove' ? 'Remove Credits' : 'Set Credits'}
               </DialogTitle>
               <DialogDescription>
@@ -1049,7 +1049,7 @@ export default function CallSubscriptions() {
               </div>
               <div>
                 <Label className="text-sm font-medium">
-                  {creditDialog.action === 'add' ? 'Credits to Add' : 
+                  {creditDialog.action === 'add' ? 'Credits to Add' :
                    creditDialog.action === 'remove' ? 'Credits to Remove' : 'New Credit Amount'}
                 </Label>
                 <Input
@@ -1078,7 +1078,7 @@ export default function CallSubscriptions() {
                     <span className="font-medium text-gray-900">Result:</span>
                     <span className="text-lg font-bold text-gray-900">
                       {formatNumber(
-                        creditDialog.action === 'add' 
+                        creditDialog.action === 'add'
                           ? creditDialog.currentCredits + parseInt(creditDialog.newCredits || '0')
                           : creditDialog.action === 'remove'
                           ? Math.max(0, creditDialog.currentCredits - parseInt(creditDialog.newCredits || '0'))

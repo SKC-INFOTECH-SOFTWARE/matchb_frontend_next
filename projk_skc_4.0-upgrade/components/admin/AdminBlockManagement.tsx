@@ -38,7 +38,7 @@ export default function AdminBlocksManagement() {
     try {
       setLoading(true)
       const token = localStorage.getItem("token")
-      const response = await fetch("/api/admin/blocks", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/blocks`, {
         headers: { Authorization: `Bearer ${token}` },
       })
 
@@ -61,7 +61,7 @@ export default function AdminBlocksManagement() {
     try {
       setUnblocking(blockId)
       const token = localStorage.getItem("token")
-      const response = await fetch("/api/admin/blocks", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/blocks`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -84,7 +84,7 @@ export default function AdminBlocksManagement() {
     try {
       setTogglingCall(blockId)
       const token = localStorage.getItem("token")
-      const response = await fetch("/api/admin/blocks", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/blocks`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

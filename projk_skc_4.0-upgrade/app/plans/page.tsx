@@ -26,7 +26,7 @@ export default function PlansPage() {
   useEffect(() => {
     async function fetchPlans() {
       try {
-        const response = await fetch("/api/plans")
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/plans`)
         if (!response.ok) {
           throw new Error("Failed to fetch plans")
         }
@@ -38,7 +38,7 @@ export default function PlansPage() {
               .split(",")
               .map((feature: string) => feature.trim())
               .filter((feature: string) => feature !== "")
-          
+
           } else if (Array.isArray(plan.features)) {
             features = plan.features.length > 0 ? plan.features : null
           }
@@ -65,7 +65,7 @@ export default function PlansPage() {
     fetchPlans()
   }, [])
 
- 
+
   const handleChoosePlan = (planId: number) => {
     router.push(`/login/user?planId=${planId}`)
   }
@@ -123,7 +123,7 @@ export default function PlansPage() {
                 </h2>
                 <p className="text-lg text-gray-600">Complete packages for your matrimonial journey</p>
               </div>
-              
+
               <div className="grid md:grid-cols-4 gap-8">
                 {normalPlans.map((plan) => (
                   <div
@@ -195,7 +195,7 @@ export default function PlansPage() {
                 </h2>
                 <p className="text-lg text-gray-600">Add-on plans to make voice calls with your matches</p>
               </div>
-              
+
               <div className="grid md:grid-cols-4 gap-8">
                 {callPlans.map((plan) => (
                   <div

@@ -32,7 +32,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const token = localStorage.getItem("token")
     if (token) {
-      fetch("/api/auth/verify", {
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/verify`, {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then((res) => res.json())
@@ -52,7 +52,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async (identifier: string, password: string, type: "user" | "admin"): Promise<boolean> => {
     try {
-      const res = await fetch("/api/auth/login", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ identifier, password, type }),
@@ -64,7 +64,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         localStorage.setItem("token", data.token)
 
         let userData: User
-        
+
         if (type === "admin" && data.admin) {
           userData = {
             id: data.admin.id,
@@ -85,7 +85,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             profileComplete: data.user.profileComplete,
           }
           setUser(userData)
-          
+
           if (userData.profileComplete) {
             router.push("/dashboard")
           } else {
@@ -105,7 +105,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const register = async (email: string, password: string, name: string, phone: string): Promise<boolean> => {
     try {
-      const res = await fetch("/api/auth/register", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password, name, phone }),
@@ -121,10 +121,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           name: data.user.name,
           phone: data.user.phone,
           role: data.user.role,
-          profileComplete: false, 
+          profileComplete: false,
         }
         setUser(userData)
-        
+
         router.push("/profile/create")
         return true
       }

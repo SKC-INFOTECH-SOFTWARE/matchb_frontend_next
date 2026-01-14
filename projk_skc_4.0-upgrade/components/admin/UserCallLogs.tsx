@@ -67,11 +67,11 @@ export default function UserCallLogs() {
   const [loadingUsers, setLoadingUsers] = useState(true)
   const [loadingLogs, setLoadingLogs] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  
+
   const [usersPagination, setUsersPagination] = useState<Pagination>({
     page: 1, limit: 20, total: 0, totalPages: 0
   })
-  
+
   const [logsPagination, setLogsPagination] = useState<Pagination>({
     page: 1, limit: 20, total: 0, totalPages: 0
   })
@@ -93,7 +93,7 @@ export default function UserCallLogs() {
     try {
       const token = localStorage.getItem("token")
       const response = await fetch(
-        `/api/admin/user-call-logs?page=${usersPagination.page}&limit=${usersPagination.limit}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/user-call-logs?page=${usersPagination.page}&limit=${usersPagination.limit}`,
         { headers: { Authorization: `Bearer ${token}` } }
       )
 
@@ -118,7 +118,7 @@ export default function UserCallLogs() {
     try {
       const token = localStorage.getItem("token")
       const response = await fetch(
-        `/api/admin/user-call-logs?userId=${userId}&page=${logsPagination.page}&limit=${logsPagination.limit}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/user-call-logs?userId=${userId}&page=${logsPagination.page}&limit=${logsPagination.limit}`,
         { headers: { Authorization: `Bearer ${token}` } }
       )
 
@@ -139,10 +139,10 @@ export default function UserCallLogs() {
   }
 
   const formatDate = (dateString: string | null, fallbackDate: string | null) => {
-    const date = dateString && !isNaN(new Date(dateString).getTime()) 
-      ? new Date(dateString) 
-      : (fallbackDate && !isNaN(new Date(fallbackDate).getTime()) 
-          ? new Date(fallbackDate) 
+    const date = dateString && !isNaN(new Date(dateString).getTime())
+      ? new Date(dateString)
+      : (fallbackDate && !isNaN(new Date(fallbackDate).getTime())
+          ? new Date(fallbackDate)
           : null)
     if (!date) return "N/A"
     return date.toLocaleDateString("en-IN", {
@@ -172,7 +172,7 @@ export default function UserCallLogs() {
       "in_progress": { variant: "default" as const, label: "In Progress" }
     }
 
-    const config = statusConfig[status as keyof typeof statusConfig] || 
+    const config = statusConfig[status as keyof typeof statusConfig] ||
                    { variant: "secondary" as const, label: status }
 
     return (
@@ -347,7 +347,7 @@ export default function UserCallLogs() {
               {usersPagination.totalPages > 1 && (
                 <div className="flex items-center justify-between mt-6 pt-4 border-t">
                   <p className="text-sm text-gray-600">
-                    Page {usersPagination.page} of {usersPagination.totalPages} 
+                    Page {usersPagination.page} of {usersPagination.totalPages}
                     ({usersPagination.total} total users)
                   </p>
                   <div className="flex items-center gap-2">
@@ -482,7 +482,7 @@ export default function UserCallLogs() {
                   {logsPagination.totalPages > 1 && (
                     <div className="flex items-center justify-between mt-2 text-xs">
                       <p className="text-gray-600">
-                        Page {logsPagination.page}/{logsPagination.totalPages} 
+                        Page {logsPagination.page}/{logsPagination.totalPages}
                         ({logsPagination.total} calls)
                       </p>
                       <div className="flex items-center gap-1">

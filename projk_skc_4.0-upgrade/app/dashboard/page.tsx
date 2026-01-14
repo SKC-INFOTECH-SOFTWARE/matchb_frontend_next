@@ -123,7 +123,7 @@ export default function Dashboard() {
   const fetchUserProfile = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("/api/profile/me", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/profile/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -175,7 +175,7 @@ export default function Dashboard() {
   const fetchMatches = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("/api/user/matches", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user/matches`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.ok) {
@@ -212,7 +212,7 @@ export default function Dashboard() {
         ...(searchFilters.occupation && { occupation: searchFilters.occupation }),
       });
 
-      const response = await fetch(`/api/user/search?${params}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user/search?${params}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -253,7 +253,7 @@ export default function Dashboard() {
   const fetchActivePlans = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("/api/user/active-plan", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user/active-plan`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.ok) {
@@ -272,7 +272,7 @@ export default function Dashboard() {
     setLoadingCallLogs(true);
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("/api/calls/initiate?logs=true", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/calls/initiate?logs=true`, {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -312,7 +312,7 @@ export default function Dashboard() {
   const fetchPlans = async () => {
     setLoadingPlans(true);
     try {
-      const response = await fetch("/api/plans");
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/plans`);
       if (response.ok) {
         const data = await response.json();
         setPlans(data.plans);
@@ -338,7 +338,7 @@ export default function Dashboard() {
     setMakingCall(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('/api/calls/initiate', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/calls/initiate`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -358,7 +358,7 @@ export default function Dashboard() {
         const pollInterval = setInterval(async () => {
           pollCount++;
           try {
-            const statusResponse = await fetch(`/api/calls/initiate?callSessionId=${data.callSessionId}`, {
+            const statusResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/calls/initiate?callSessionId=${data.callSessionId}`, {
               headers: { Authorization: `Bearer ${token}` },
             });
             if (statusResponse.ok) {
@@ -400,7 +400,7 @@ export default function Dashboard() {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`/api/user/profile-details/${profileId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user/profile-details/${profileId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -453,7 +453,7 @@ export default function Dashboard() {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("/api/profile/edit", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/profile/edit`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -506,7 +506,7 @@ export default function Dashboard() {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("/api/user/change-password", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user/change-password`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

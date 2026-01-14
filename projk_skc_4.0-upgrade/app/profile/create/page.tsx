@@ -80,7 +80,7 @@ export default function CreateProfilePage() {
       const formDataUpload = new FormData()
       formDataUpload.append("file", file)
 
-      const response = await fetch("/api/upload", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/upload`, {
         method: "POST",
         body: formDataUpload,
       })
@@ -225,7 +225,7 @@ export default function CreateProfilePage() {
 
     try {
       const token = localStorage.getItem("token")
-      const response = await fetch("/api/profile/create", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/profile/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

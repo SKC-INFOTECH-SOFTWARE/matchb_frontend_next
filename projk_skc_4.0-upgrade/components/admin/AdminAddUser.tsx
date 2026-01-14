@@ -108,13 +108,13 @@ export default function AdminAddUser({ onUserAdded }: AdminAddUserProps) {
     }
 
     setSelectedFile(file)
-    
+
     const reader = new FileReader()
     reader.onload = () => {
       setPreviewUrl(reader.result as string)
     }
     reader.readAsDataURL(file)
-    
+
     if (message) setMessage(null)
   }
 
@@ -135,7 +135,7 @@ export default function AdminAddUser({ onUserAdded }: AdminAddUserProps) {
       const uploadFormData = new FormData()
       uploadFormData.append("file", selectedFile)
 
-      const response = await fetch("/api/upload", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/upload`, {
         method: "POST",
         body: uploadFormData,
       })
@@ -158,7 +158,7 @@ export default function AdminAddUser({ onUserAdded }: AdminAddUserProps) {
 
   const validateForm = (): boolean => {
     const requiredFields = ['name', 'email', 'phone', 'age', 'gender', 'caste', 'religion', 'education', 'occupation', 'state', 'city', 'marital_status']
-    
+
     for (const field of requiredFields) {
       if (!formData[field as keyof FormData]) {
         setMessage({ type: 'error', text: `${field.replace('_', ' ')} is required` })
@@ -211,7 +211,7 @@ export default function AdminAddUser({ onUserAdded }: AdminAddUserProps) {
         return
       }
 
-      const response = await fetch("/api/admin/create-profile", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/create-profile`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -232,7 +232,7 @@ export default function AdminAddUser({ onUserAdded }: AdminAddUserProps) {
           userId: data.userId,
           password: data.defaultPassword
         })
-        
+
         setFormData({
           name: "",
           email: "",
@@ -561,7 +561,7 @@ export default function AdminAddUser({ onUserAdded }: AdminAddUserProps) {
                     disabled={isLoading}
                   />
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label>Profile Photo (Optional)</Label>
                   <div className="space-y-4">

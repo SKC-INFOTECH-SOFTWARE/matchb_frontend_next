@@ -48,7 +48,7 @@ export default function PaymentSubmitPage() {
 
   const fetchPlans = async () => {
     try {
-      const response = await fetch("/api/plans")
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/plans`)
       if (response.ok) {
         const data = await response.json()
         setPlans(data.plans)
@@ -73,7 +73,7 @@ export default function PaymentSubmitPage() {
 
     try {
       const token = localStorage.getItem("token")
-      const response = await fetch("/api/payments/submit", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/payments/submit`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
