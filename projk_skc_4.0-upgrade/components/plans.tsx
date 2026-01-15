@@ -25,12 +25,12 @@ export function Plans() {
   useEffect(() => {
     async function fetchPlans() {
       try {
-        const response = await fetch("/api/plans")
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/plans`)
         if (!response.ok) {
           throw new Error("Failed to fetch plans")
         }
         const data = await response.json()
-        
+
         const formattedPlans = data.plans.map((plan: any) => {
           let features: string[] | null = null
           if (plan.features) {
@@ -105,7 +105,7 @@ export function Plans() {
             </h3>
             <p className="text-lg text-gray-500">Complete matrimonial packages for finding your perfect match</p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {normalPlans.map((plan) => (
               <Card
@@ -167,7 +167,7 @@ export function Plans() {
               </h3>
               <p className="text-lg text-gray-500">Add-on plans to make voice calls with your matches</p>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {callPlans.map((plan) => (
                 <Card
